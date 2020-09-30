@@ -5,7 +5,16 @@ layout:decorate="~{layout/layout1}">
 <div layout:fragment="content">
     <div class="panel-heading">List Page</div>
     <div class="panel-body">
-        List contents...
+        <p>[[${listOfDto}]]</p>
+        <div>
+
+            <ul class="list-group">
+                <li class="list-group-item" th:each="boarddto:${listOfDto.content}">
+                    [[${boarddto}]]
+                </li>
+            </ul>
+
+        </div>
     </div>
 </div>
 
