@@ -9,9 +9,11 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.zerock.boot06.dto.WebBoardDto;
 import org.zerock.boot06.service.WebBoardService;
+import org.zerock.boot06.vo.PageMaker;
 import org.zerock.boot06.vo.PageVO;
 
 import java.util.List;
@@ -41,11 +43,18 @@ public class WebBoardController {
 
     // @PageableDefault와 같은 방식으로 접근해도 알아서 PageVO로 처리해서 보내주게 됨
     @GetMapping("/list")
-    public void list(PageVO vo, Model model) {
+    public void list(@ModelAttribute("pageVO") PageVO vo, Model model) {
         Pageable pageable = vo.makePageable(0, "bno");
-        log.info("IN CONTROLLER: list() called..." + pageable);
         Page<WebBoardDto> listOfDto = service.list(vo);
-        model.addAttribute("listOfDto", listOfDto);
+
+        log.info("IN CONTROLLER: list() called...");
+        log.info("" + pageable);
+        log.info("" + listOfDto);
+        log.info("TOTAL PAGE NUMBER: " + listOfDto.getTotalPages());
+
+
+
+        model.addAttribute("listOfDto", new PageMaker(listOfDto));
     }
 
 }

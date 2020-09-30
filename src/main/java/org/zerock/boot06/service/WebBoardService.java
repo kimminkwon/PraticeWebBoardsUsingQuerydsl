@@ -24,7 +24,7 @@ public class WebBoardService {
     @Transactional
     public Page<WebBoardDto> list(PageVO vo) {
         Pageable pageable = vo.makePageable(0, "bno");
-        Page<WebBoard> result = repository.findAll(repository.makePrdicate(null, null), pageable);
+        Page<WebBoard> result = repository.findAll(repository.makePrdicate(vo.getType(), vo.getKeyword()), pageable);
         Page<WebBoardDto> resultOfDto = result.map(new Function<WebBoard, WebBoardDto>() {
             @Override
             public WebBoardDto apply(WebBoard entity) {
