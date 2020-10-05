@@ -5,6 +5,9 @@ layout:decorate="~{layout/layout1}">
 <div layout:fragment="content">
 
     <div class="panel-heading">List Page</div>
+    <div class="panel-body pull-right">
+        <h3><a class="label label-default" th:href="@{register}">Register</a></h3>
+    </div>
     <div class="panel-body">
 
 
@@ -105,6 +108,26 @@ layout:decorate="~{layout/layout1}">
                 formObj.find("[name='keyword']").val(keywordStr);
                 formObj.find("[name='page']").val("1");
                 formObj.submit();
+            });
+
+            // 저장이 된 후에 이쪽 페이지로 넘어왔을 때 저장 완료 메세지
+            $(window).load(function (){
+               var msg = [[${msg}]];
+
+               if(msg == 'success') {
+                   alert("정상적으로 처리되었습니다.");
+                   var stateObj = { msg:"" };
+               }
+            });
+
+            // bno를 클릭했을 시, 수정 페이지로 넘어가도록 하는 메서드
+            $(".boardLink").click(function (e){
+                e.preventDefault();
+                var boardNo = $(this).attr("href");
+                formObj.attr("action", [[@{'/boards/view'}]]);
+                formObj.append("<input type='hidden' name='bno' value='" + boardNo + "'>");
+                formObj.submit();
+
             });
         });
 

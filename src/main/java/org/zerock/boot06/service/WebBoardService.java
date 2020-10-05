@@ -8,11 +8,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.boot06.domain.WebBoard;
 import org.zerock.boot06.dto.WebBoardDto;
+import org.zerock.boot06.dto.WebBoardSaveDto;
 import org.zerock.boot06.persistence.WebBoardRepository;
 import org.zerock.boot06.vo.PageVO;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Function;
 
 @RequiredArgsConstructor
@@ -40,5 +39,21 @@ public class WebBoardService {
         log.info("" + resultOfDto);
 
         return resultOfDto;
+    }
+
+    @Transactional
+    public void save(WebBoardSaveDto dto) {
+        repository.save(dto.toEntity());
+    }
+
+    public WebBoardDto findById(Long bno) {
+        WebBoard entity = repository.findById(bno)
+                .orElseThrow(() -> new IllegalArgumentException("id가 존재하지 않습니다 id: " + bno));
+        return new WebBoardDto(entity);
+    }
+
+    @Transactional
+    public void deleteById(Long bno) {
+        repository.deleteById(bno);
     }
 }

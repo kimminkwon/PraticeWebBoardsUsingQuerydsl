@@ -1,9 +1,6 @@
 package org.zerock.boot06.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -16,6 +13,7 @@ import java.sql.Timestamp;
 @Table(name = "tbl_webboards")
 @EqualsAndHashCode
 @ToString
+@NoArgsConstructor
 public class WebBoard {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,4 +27,10 @@ public class WebBoard {
     @UpdateTimestamp
     private Timestamp updatedate;
 
+    @Builder
+    public WebBoard(String title, String writer, String content) {
+        this.title = title;
+        this.writer = writer;
+        this.content = content;
+    }
 }
