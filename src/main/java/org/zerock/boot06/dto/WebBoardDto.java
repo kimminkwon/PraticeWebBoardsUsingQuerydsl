@@ -15,6 +15,7 @@ public class WebBoardDto {
     private String title;
     private String writer;
     private String content;
+
     private Timestamp regdate;
     private Timestamp updatedate;
 

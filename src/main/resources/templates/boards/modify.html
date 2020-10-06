@@ -25,7 +25,7 @@
 
             <div class="form-group">
                 <label>Writer</label>
-                <input class="form-control" name="writer" th:value="${dto.writer}" readonly="readonly" />
+                <input class="form-control" name="writer" th:value="${dto.writer}" />
             </div>
 
             <input type="hidden" name="page" th:value="${pageVO.page}">
@@ -63,11 +63,17 @@
 
            var formObj = $("#f1");
 
-           $(".delbtn").click(function () {
-               formObj.attr("action", "delete");
-               formObj.attr("method", "post");
-               formObj.submit();
-           });
+            $(".delbtn").click(function () {
+                formObj.attr("action", "delete");
+                formObj.attr("method", "post");
+                formObj.submit();
+            });
+
+            $(".modbtn").click(function () {
+                formObj.attr("action", "modify");
+                formObj.attr("method", "post");
+                formObj.submit();
+            });
 
         });
     </script>

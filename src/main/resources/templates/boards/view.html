@@ -49,5 +49,15 @@
 <th:block layout:fragment="script">
     <script th:inline="javascript">
 
+        // 수정이 된 후에 이쪽 페이지로 넘어왔을 때 저장 완료 메세지
+        $(window).load(function (){
+            var msg = [[${msg}]];
+
+            if(msg == 'success') {
+                alert("Success modify of data!");
+                var stateObj = { msg:"" };
+            }
+        });
+
     </script>
 </th:block>

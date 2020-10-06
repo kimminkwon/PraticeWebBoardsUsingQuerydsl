@@ -33,4 +33,10 @@ public class WebBoard {
         this.writer = writer;
         this.content = content;
     }
+
+    public void update(String title, String writer, String content) {
+        this.title = title;
+        this.writer = writer;
+        this.content = content;
+    }
 }

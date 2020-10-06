@@ -4,17 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.zerock.boot06.domain.WebBoard;
 import org.zerock.boot06.dto.WebBoardDto;
+import org.zerock.boot06.dto.WebBoardModifyDto;
 import org.zerock.boot06.dto.WebBoardSaveDto;
 import org.zerock.boot06.service.WebBoardService;
 import org.zerock.boot06.vo.PageMaker;
@@ -96,6 +91,25 @@ public class WebBoardController {
         WebBoardDto dto = service.findById(bno);
         log.info("DTO: " + dto);
         model.addAttribute("dto", dto);
+    }
+
+    // modify 페이지에서 수정을 눌렀을 때
+    @PostMapping("/modify")
+    public String modifyPost(WebBoardModifyDto dto, PageVO vo, RedirectAttributes rttr) {
+        log.info("IN CONTROLLER: modifyPost() called...");
+        log.info("DTO: " + dto);
+
+        service.modify(dto);
+        rttr.addFlashAttribute("msg", "success");
+        rttr.addAttribute("bno", dto.getBno());
+
+        // paging과 검색했던 결과를 유지하기 위해
+        rttr.addAttribute("page", vo.getPage());
+        rttr.addAttribute("size", vo.getSize());
+        rttr.addAttribute("type", vo.getType());
+        rttr.addAttribute("keyword", vo.getKeyword());
+
+        return "redirect:/boards/view";
     }
 
     // modify 페이지에서 삭제를 눌렀을 때

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.zerock.boot06.domain.WebBoard;
 import org.zerock.boot06.dto.WebBoardDto;
+import org.zerock.boot06.dto.WebBoardModifyDto;
 import org.zerock.boot06.dto.WebBoardSaveDto;
 import org.zerock.boot06.persistence.WebBoardRepository;
 import org.zerock.boot06.vo.PageVO;
@@ -34,7 +35,7 @@ public class WebBoardService {
             }
         });
 
-        log.info("IN CONTROLLER: list() called...");
+        log.info("IN SERVICE: list() called...");
         log.info("" + pageable);
         log.info("" + resultOfDto);
 
@@ -55,5 +56,14 @@ public class WebBoardService {
     @Transactional
     public void deleteById(Long bno) {
         repository.deleteById(bno);
+    }
+
+    @Transactional
+    public void modify(WebBoardModifyDto dto) {
+        log.info("IN SERVICE: list() called...");
+        log.info("Dto: " + dto);
+        WebBoard entity = repository.findById(dto.getBno())
+                .orElseThrow(() -> new IllegalArgumentException("id가 존재하지 않습니다 id: " + dto.getBno()));
+        entity.update(dto.getTitle(), dto.getWriter(), dto.getContent());
     }
 }
