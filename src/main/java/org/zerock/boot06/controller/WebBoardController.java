@@ -15,8 +15,6 @@ import org.zerock.boot06.service.WebBoardService;
 import org.zerock.boot06.vo.PageMaker;
 import org.zerock.boot06.vo.PageVO;
 
-import java.util.List;
-
 @RequiredArgsConstructor
 @Controller
 @RequestMapping("/boards/")
