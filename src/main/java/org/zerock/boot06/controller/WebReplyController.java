@@ -57,4 +57,12 @@ public class WebReplyController {
 
         return service.modifyReply(bno, reply);
     }
+
+    // 모든 댓글 조회 기능 (GET)
+    @GetMapping("/{bno}")
+    public ResponseEntity<List<WebReplyDto>> getReplies(@PathVariable("bno") Long bno) {
+        log.info("IN REPLY CONTROLLER: getReplies() called...");
+
+        return service.getReplies(bno);
+    }
 }

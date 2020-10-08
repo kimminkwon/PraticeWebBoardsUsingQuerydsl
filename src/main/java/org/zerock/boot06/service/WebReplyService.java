@@ -61,6 +61,13 @@ public class WebReplyService {
         return new ResponseEntity<>(getListByBoard(board), HttpStatus.CREATED);
     }
 
+    public ResponseEntity<List<WebReplyDto>> getReplies(Long bno) {
+        WebBoard board = new WebBoard();
+        board.setBno(bno);
+
+        return new ResponseEntity<>(getListByBoard(board), HttpStatus.OK);
+    }
+
     private List<WebReplyDto> getListByBoard(WebBoard board) {
         log.info("IN SERVICE(WEB REPLY) : getListByBoard() called...");
         log.info("BOARD" + board);
@@ -73,6 +80,5 @@ public class WebReplyService {
         log.info("dtoList" + dtoList);
         return dtoList;
     }
-
 
 }
