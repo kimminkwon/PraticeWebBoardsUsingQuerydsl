@@ -140,20 +140,33 @@
             var replyTextObj = $("input[name='replyText']");
             var replyerObj = $("input[name='replyer']");
 
-            $("#modalBtn").click(function () {
-               if(mode == "ADD") {
-                   var replyText = replyTextObj.val();
-                   var replyer = replyerObj.val();
-                   var obj = {replyText:replyText, replyer:replyer, bno:bno};
+            // 수정 작업
+            function afterAll(list) {
+                printList(list);
+                $("#myModal").modal("hide");
+                replyerObj.val("");
+                replyTextObj.val("");
+            }
 
+            $("#modalBtn").click(function () {
+
+                var replyText = replyTextObj.val();
+                var replyer = replyerObj.val();;
+
+               if(mode == "ADD") {
+                   var obj = {replyText:replyText, replyer:replyer, bno:bno}
                    console.log(obj)
 
                    replyManager.add(obj, function (list) {
-                      printList(list);
-                      alert("새로운 댓글이 추가되었습니다.");
-                      $("#myModal").modal("hide");
-                      replyTextObj.val("");
-                      replyerObj.val("");
+
+                       alert("새로운 댓글이 추가되었습니다.");
+                       afterAll(list);
+                   });
+               } else if(mode == "MOD") {
+                   var obj = {replyText:replyText, bno:bno, rno:rno};
+                   replyManager.update(obj, function (list) {
+                      alert("댓글이 수정되었습니다.");
+                      afterAll(list);
                    });
                }
             });
@@ -174,7 +187,7 @@
                $("#delModalBtn").show();
             });
 
-            // 삭제작업 2
+            // 삭제작업
             $("#delModalBtn").on("click", function () {
                var obj = {bno: bno, rno: rno};
                replyManager.remove(obj, function(list) {
@@ -185,6 +198,9 @@
                    replyerObj.val("");
                 });
             });
+
+
+
         });
 
 
