@@ -47,4 +47,14 @@ public class WebReplyController {
 
         return service.removeReply(bno, rno);
     }
+
+    // 댓글 수정 기능 (PUT)
+    @PutMapping("/{bno}")
+    public ResponseEntity<List<WebReplyDto>> modifyReply(@PathVariable("bno") Long bno, @RequestBody WebReply reply) {
+        log.info("IN REPLY CONTROLLER: modifyReply() called...");
+        log.info("BNO: " + bno);
+        log.info("REPLY: " + reply);
+
+        return service.modifyReply(bno, reply);
+    }
 }
