@@ -37,4 +37,14 @@ public class WebReplyController {
 
         return service.addReply(bno, reply);
     }
+
+    // 댓글 삭제 기능 (Delete): 댓글 삭제용 rno와 삭제 후 갱신을 위한 bno
+    @DeleteMapping("/{bno}/{rno}")
+    public ResponseEntity<List<WebReplyDto>> removeReply(@PathVariable("bno") Long bno, @PathVariable("rno") Long rno) {
+        log.info("IN REPLY CONTROLLER: removeReply() called...");
+        log.info("BNO: " + bno);
+        log.info("RNO: " + rno);
+
+        return service.removeReply(bno, rno);
+    }
 }

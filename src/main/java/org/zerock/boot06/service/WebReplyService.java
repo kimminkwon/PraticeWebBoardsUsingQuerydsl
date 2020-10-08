@@ -32,6 +32,21 @@ public class WebReplyService {
         return new ResponseEntity<>(getListByBoard(board), HttpStatus.CREATED);
     }
 
+    @Transactional
+    public ResponseEntity<List<WebReplyDto>> removeReply(Long bno, Long rno) {
+        log.info("IN SERVICE(WEB REPLY) : removeReply() called...");
+        repository.deleteById(rno);
+        List<WebReplyDto> dtoList = new ArrayList<>();
+        WebBoard board = new WebBoard();
+        board.setBno(bno);
+        repository.getRepliesOfBoard(board).forEach(
+                webReply -> {
+                    dtoList.add(new WebReplyDto(webReply));
+                }
+        );
+        return new ResponseEntity<>(dtoList, HttpStatus.CREATED);
+    }
+
     private List<WebReplyDto> getListByBoard(WebBoard board) {
         log.info("IN SERVICE(WEB REPLY) : getListByBoard() called...");
         log.info("BOARD" + board);
@@ -44,4 +59,6 @@ public class WebReplyService {
         log.info("dtoList" + dtoList);
         return dtoList;
     }
+
+
 }
