@@ -7,7 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.zerock.boot06.domain.WebReply;
+import org.zerock.boot06.dto.WebReplyDto;
 import org.zerock.boot06.service.WebReplyService;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @RestController // REST 방식의 접근을 의미
@@ -22,18 +25,16 @@ public class WebReplyController {
     3. 댓글 수정 기능 = PUT
     4. 모든 댓글 조회 = GET
      */
+
     private final WebReplyService service;
 
     // 댓글 추가 기능 (POST)
     @PostMapping("/{bno}")
-    public ResponseEntity<Void> addReply(@PathVariable("bno") Long bno, @RequestBody WebReply reply) {
+    public ResponseEntity<List<WebReplyDto>> addReply(@PathVariable("bno") Long bno, @RequestBody WebReply reply) {
         log.info("IN REPLY CONTROLLER: addReply() called...");
         log.info("BNO: " + bno);
         log.info("REPLY: " + reply);
 
-        service.addReply(bno, reply);
-
-        return new ResponseEntity<>(HttpStatus.CREATED);
-
+        return service.addReply(bno, reply);
     }
 }
