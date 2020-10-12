@@ -26,7 +26,10 @@ layout:decorate="~{layout/layout1}">
                 <tbody>
                     <tr class="odd gradeX" th:each="boardDto:${listOfDto.content}">
                         <td>[[${boardDto.bno}]]</td>
-                        <td><a th:href='${boardDto.bno}' class='boardLink'>[[${boardDto.title}]]</a></td>
+                        <td>
+                            <a th:href='${boardDto.bno}' class='boardLink'>[[${boardDto.title}]]</a>
+                            <span class="badge">[[${boardDto.replies.size()}]]</span>
+                        </td>
                         <td>[[${boardDto.writer}]]</td>
                         <td class="center">[[${#dates.format(boardDto.regdate, 'yyyy-MM-dd')}]]</td>
                     </tr>
