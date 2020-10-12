@@ -8,6 +8,7 @@ import org.zerock.boot06.domain.WebBoard;
 import org.zerock.boot06.domain.WebReply;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -20,6 +21,7 @@ public class WebBoardDto {
     private Timestamp regdate;
     private Timestamp updatedate;
     private List<WebReply> replies;
+    private Long numOfReplies;
 
     public WebBoardDto(WebBoard entity) {
         this.bno = entity.getBno();
@@ -30,4 +32,13 @@ public class WebBoardDto {
         this.updatedate = entity.getUpdatedate();
         this.replies = entity.getReplies();
     }
+
+    public WebBoardDto(Object[] entity) {
+        this.bno = (Long) entity[0];
+        this.title = (String) entity[1];
+        this.numOfReplies = (Long) entity[2];
+        this.writer = (String) entity[3];
+        this.regdate = (Timestamp) entity[4];
+    }
+
 }

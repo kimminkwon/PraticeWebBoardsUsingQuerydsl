@@ -28,7 +28,7 @@ layout:decorate="~{layout/layout1}">
                         <td>[[${boardDto.bno}]]</td>
                         <td>
                             <a th:href='${boardDto.bno}' class='boardLink'>[[${boardDto.title}]]</a>
-                            <span class="badge">[[${boardDto.replies.size()}]]</span>
+                            <span class="badge">[[${boardDto.numOfReplies}]]</span>
                         </td>
                         <td>[[${boardDto.writer}]]</td>
                         <td class="center">[[${#dates.format(boardDto.regdate, 'yyyy-MM-dd')}]]</td>

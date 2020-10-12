@@ -10,7 +10,7 @@ import org.zerock.boot06.domain.WebBoard;
 import org.zerock.boot06.dto.WebBoardDto;
 import org.zerock.boot06.dto.WebBoardModifyDto;
 import org.zerock.boot06.dto.WebBoardSaveDto;
-import org.zerock.boot06.persistence.WebBoardRepository;
+import org.zerock.boot06.persistence.CustomCrudRepository;
 import org.zerock.boot06.vo.PageVO;
 
 import java.util.function.Function;
@@ -19,8 +19,9 @@ import java.util.function.Function;
 @Service
 @Log
 public class WebBoardService {
-    private final WebBoardRepository repository;
+    private final CustomCrudRepository repository;
 
+    /*
     @Transactional
     public Page<WebBoardDto> list(PageVO vo) {
         Pageable pageable = vo.makePageable(0, "bno");
@@ -31,6 +32,26 @@ public class WebBoardService {
                 WebBoardDto dto = new WebBoardDto(entity);
                 // Conversion logic
 
+                return dto;
+            }
+        });
+
+        log.info("IN SERVICE: list() called...");
+        log.info("" + pageable);
+        log.info("" + resultOfDto);
+
+        return resultOfDto;
+    }*/
+
+    @Transactional
+    public Page<WebBoardDto> list(PageVO vo) {
+        Pageable pageable = vo.makePageable(0, "bno");
+        Page<Object[]> results = repository.getCustomPage(vo.getType(), vo.getKeyword(), pageable);
+
+        Page<WebBoardDto> resultOfDto = results.map(new Function<Object[], WebBoardDto>() {
+            @Override
+            public WebBoardDto apply(Object[] entity) {
+                WebBoardDto dto = new WebBoardDto((entity));
                 return dto;
             }
         });
